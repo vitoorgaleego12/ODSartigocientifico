@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #005f73;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    background-color: #94d2bd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    margin-top: 50px;
+    padding: 20px;
+    text-align: center;
+    background-color: #e0fbfc;
+    border-top: 2px solid #00bcd4; /* Azul igual ao do header */
+}
+
+.footer-bar {
+    width: 80%; /* Tamanho ajustável para centralizar */
+    height: 2px;
+    background-color: #00bcd4; /* Azul que já estava sendo utilizado */
+    margin: 0 auto; /* Centraliza a barra horizontal */
+    margin-bottom: 10px;
+}
+
+.footer-text {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+    font-style: italic;
+}
+img {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.autor {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #333;
+}
+
+.footer-bar {
+    height: 3px;
+    background-color: #005f73;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
