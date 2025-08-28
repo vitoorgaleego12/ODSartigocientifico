@@ -40,7 +40,7 @@ const ods = [
     afeta a imunidade e pode gerar consequências para toda a vida.
 
     A insegurança alimentar não se refere apenas à fome extrema, mas também à dificuldade contínua de acessar alimentos suficientes e nutritivos. Em muitos lugares, as pessoas 
-    consomem calorias vazias, com dietas pobres em nutrientes, o que leva à obesidade e a outras doenças. Por isso, a ODS 2 também trata da **qualidade da alimentação**, não 
+    consomem calorias vazias, com dietas pobres em nutrientes, o que leva à obesidade e a outras doenças. Por isso, a ODS 2 também trata da qualidade da alimentação, não 
     apenas da quantidade.
 
     A agricultura sustentável é uma parte fundamental deste objetivo. O modelo de produção atual, em muitos casos, degrada o solo, consome excessivamente os recursos naturais 
@@ -1039,3 +1039,5 @@ ods.forEach((item) => {
     lista.appendChild(li);
     lista.appendChild(divConteudo);
 });
+
+
