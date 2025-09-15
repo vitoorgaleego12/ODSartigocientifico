@@ -1040,4 +1040,166 @@ ods.forEach((item) => {
     lista.appendChild(divConteudo);
 });
 
+// Adiciona um event listener para redimensionamento da janela
+window.addEventListener('resize', ajustarResponsividade);
 
+// Função para ajustar a responsividade
+function ajustarResponsividade() {
+    const larguraJanela = window.innerWidth;
+    const elementosConteudo = document.querySelectorAll('#lista-ods > div');
+    const itensLista = document.querySelectorAll('#lista-ods > li');
+    
+    // Ajusta o tamanho da fonte e padding baseado na largura da tela
+    if (larguraJanela < 768) {
+        // Para dispositivos móveis
+        document.body.style.fontSize = '14px';
+        
+        itensLista.forEach(item => {
+            item.style.padding = '12px 15px';
+            item.style.fontSize = '16px';
+        });
+        
+        elementosConteudo.forEach(conteudo => {
+            conteudo.style.padding = '15px';
+            conteudo.style.margin = '8px 0';
+        });
+        
+    } else if (larguraJanela < 1024) {
+        // Para tablets
+        document.body.style.fontSize = '16px';
+        
+        itensLista.forEach(item => {
+            item.style.padding = '15px 20px';
+            item.style.fontSize = '18px';
+        });
+        
+        elementosConteudo.forEach(conteudo => {
+            conteudo.style.padding = '20px';
+        });
+        
+    } else {
+        // Para desktop
+        document.body.style.fontSize = '18px';
+        
+        itensLista.forEach(item => {
+            item.style.padding = '20px 25px';
+            item.style.fontSize = '20px';
+        });
+        
+        elementosConteudo.forEach(conteudo => {
+            conteudo.style.padding = '25px';
+        });
+    }
+    
+    // Ajusta imagens para serem responsivas
+    const imagens = document.querySelectorAll('img');
+    imagens.forEach(img => {
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+    });
+}
+
+// Adiciona meta viewport se não existir (para mobile)
+function adicionarViewportMeta() {
+    if (!document.querySelector('meta[name="viewport"]')) {
+        const meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, initial-scale=1.0';
+        document.head.appendChild(meta);
+    }
+}
+
+// Melhora a acessibilidade dos itens clicáveis
+function melhorarAcessibilidade() {
+    const itensLista = document.querySelectorAll('#lista-ods > li');
+    
+    itensLista.forEach(item => {
+        // Adiciona role e tabindex para acessibilidade
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-expanded', 'false');
+        
+        // Adiciona hover effect
+        item.style.transition = 'background-color 0.3s ease';
+        item.addEventListener('mouseenter', () => {
+            item.style.backgroundColor = '#3d5a80';
+            item.style.color = 'white';
+        });
+        item.addEventListener('mouseleave', () => {
+            item.style.backgroundColor = '';
+            item.style.color = '';
+        });
+        
+        // Permite abrir/fechar com Enter também
+        item.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                item.click();
+            }
+        });
+    });
+}
+
+// Adiciona botão de voltar ao topo
+function adicionarBotaoVoltarTopo() {
+    const botao = document.createElement('button');
+    botao.innerHTML = '↑';
+    botao.style.position = 'fixed';
+    botao.style.bottom = '20px';
+    botao.style.right = '20px';
+    botao.style.zIndex = '1000';
+    botao.style.width = '50px';
+    botao.style.height = '50px';
+    botao.style.borderRadius = '50%';
+    botao.style.backgroundColor = '#3d5a80';
+    botao.style.color = 'white';
+    botao.style.border = 'none';
+    botao.style.cursor = 'pointer';
+    botao.style.fontSize = '20px';
+    botao.style.display = 'none';
+    botao.style.transition = 'opacity 0.3s ease';
+    
+    botao.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            botao.style.display = 'block';
+        } else {
+            botao.style.display = 'none';
+        }
+    });
+    
+    document.body.appendChild(botao);
+}
+
+// Adiciona loading state para melhor UX
+function melhorarUX() {
+    const lista = document.getElementById('lista-ods');
+    lista.style.transition = 'opacity 0.3s ease';
+    
+    // Simula um loading rápido (pode remover se não for necessário)
+    lista.style.opacity = '0';
+    setTimeout(() => {
+        lista.style.opacity = '1';
+    }, 100);
+}
+
+// Função de inicialização
+function inicializar() {
+    adicionarViewportMeta();
+    ajustarResponsividade();
+    melhorarAcessibilidade();
+    adicionarBotaoVoltarTopo();
+    melhorarUX();
+    
+    // Executa a responsividade também no carregamento
+    window.addEventListener('load', ajustarResponsividade);
+}
+
+// Inicializa quando o DOM estiver carregado
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializar);
+} else {
+    inicializar();
+}
