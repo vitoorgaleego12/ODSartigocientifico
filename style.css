@@ -215,3 +215,167 @@ a, button, li {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+
+
+
+/* Variáveis CSS para consistência e facilidade de customização */
+:root {
+    --primary-color: #005f73;
+    --secondary-color: #94d2bd;
+    --accent-color: #ee9b00;
+    --light-bg: #f5f5f5;
+    --dark-text: #333;
+    --light-text: #fff;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --side-padding: 40px; /* Nova variável para controle do espaçamento lateral */
+}
+
+/* Reset e estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e0fbfc 100%);
+    color: var(--dark-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px var(--side-padding); /* Adiciona padding lateral */
+    width: 100%;
+}
+
+/* Cabeçalho estilizado */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #0a9396 100%);
+    color: var(--light-text);
+    padding: 30px var(--side-padding); /* Adiciona padding lateral */
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+/* ... (mantenha o restante do CSS existente) ... */
+
+/* Rodapé estilizado */
+footer {
+    margin-top: auto;
+    padding: 30px var(--side-padding); /* Adiciona padding lateral */
+    text-align: center;
+    background: linear-gradient(to right, #e0fbfc, #caf0f8);
+    border-top: 3px solid var(--primary-color);
+    position: relative;
+}
+
+/* Media query para responsividade */
+@media (max-width: 768px) {
+    :root {
+        --side-padding: 20px; /* Reduz o espaçamento em dispositivos menores */
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --side-padding: 15px; /* Espaçamento ainda menor para mobile */
+    }
+    
+    .container {
+        padding: 15px var(--side-padding);
+    }
+    
+    header {
+        padding: 20px var(--side-padding);
+    }
+}
+
+
+/* Estilo da lista */
+#lista-ods {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo de cada item */
+.ods-item {
+  padding: 15px 20px;
+  margin: 5px 0;
+  background: #98c1d9;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.ods-item:hover {
+  background: #3d5a80;
+  color: #fff;
+}
+
+/* Conteúdo escondido */
+.ods-conteudo {
+  display: none;
+  padding: 15px;
+  background: #e0fbfc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  animation: fadeIn 0.4s ease;
+}
+.ods-conteudo.ativo {
+  display: block;
+}
+.ods-conteudo img {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+/* Botão voltar ao topo */
+#btn-topo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #3d5a80;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+  transition: background 0.3s ease;
+}
+#btn-topo:hover {
+  background: #293c56;
+}
+
+/* Responsividade */
+body.mobile {
+  font-size: 14px;
+}
+body.tablet {
+  font-size: 16px;
+}
+body.desktop {
+  font-size: 18px;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
