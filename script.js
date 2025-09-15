@@ -993,44 +993,46 @@ const ods = [
     }
 ];
 
+
 // ========================================
-// SISTEMA DE EXIBIÇÃO DOS ODS - MELHORADO
+// SISTEMA DE EXIBIÇÃO DOS ODS - OTIMIZADO
 // ========================================
 
-// Pega a lista principal
+// Seleção da lista principal
 const lista = document.getElementById("lista-ods");
-
-// Mantém referência ao conteúdo aberto
 let conteudoAberto = null;
 
-// Função para criar cada item ODS
-function criarItemODS(item) {
+// ----------------------
+// CRIAÇÃO DOS ITENS
+// ----------------------
+function criarItemODS({ titulo, texto, imagem }) {
     const li = document.createElement("li");
-    li.classList.add("ods-item");
-    li.textContent = item.titulo;
+    li.className = "ods-item";
+    li.textContent = titulo;
 
     const divConteudo = document.createElement("div");
-    divConteudo.classList.add("ods-conteudo");
+    divConteudo.className = "ods-conteudo";
     divConteudo.innerHTML = `
-        <p>${item.texto}</p>
-        <img src="${item.imagem}" alt="${item.titulo}" />
+        <p>${texto}</p>
+        <img src="${imagem}" alt="Imagem ilustrativa do ODS: ${titulo}" loading="lazy" />
     `;
 
-    // Evento de abrir/fechar
+    // Evento abrir/fechar
     li.addEventListener("click", () => {
         if (conteudoAberto && conteudoAberto !== divConteudo) {
             conteudoAberto.classList.remove("ativo");
+            conteudoAberto.previousElementSibling.setAttribute("aria-expanded", "false");
         }
 
-        divConteudo.classList.toggle("ativo");
-        conteudoAberto = divConteudo.classList.contains("ativo") ? divConteudo : null;
+        const ativo = divConteudo.classList.toggle("ativo");
+        li.setAttribute("aria-expanded", ativo);
+        conteudoAberto = ativo ? divConteudo : null;
     });
 
-    lista.appendChild(li);
-    lista.appendChild(divConteudo);
+    lista.append(li, divConteudo);
 }
 
-// Gera toda a lista
+// Renderiza a lista
 ods.forEach(criarItemODS);
 
 // ----------------------
@@ -1038,15 +1040,8 @@ ods.forEach(criarItemODS);
 // ----------------------
 function ajustarResponsividade() {
     const largura = window.innerWidth;
-    document.body.classList.remove("mobile", "tablet", "desktop");
-
-    if (largura < 768) {
-        document.body.classList.add("mobile");
-    } else if (largura < 1024) {
-        document.body.classList.add("tablet");
-    } else {
-        document.body.classList.add("desktop");
-    }
+    document.body.className = 
+        largura < 768 ? "mobile" : largura < 1024 ? "tablet" : "desktop";
 }
 window.addEventListener("resize", ajustarResponsividade);
 
@@ -1054,15 +1049,16 @@ window.addEventListener("resize", ajustarResponsividade);
 // ACESSIBILIDADE
 // ----------------------
 function melhorarAcessibilidade() {
-    const itens = document.querySelectorAll(".ods-item");
-
-    itens.forEach(item => {
+    document.querySelectorAll(".ods-item").forEach(item => {
         item.setAttribute("role", "button");
         item.setAttribute("tabindex", "0");
         item.setAttribute("aria-expanded", "false");
 
-        item.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") item.click();
+        item.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                item.click();
+            }
         });
     });
 }
@@ -1073,14 +1069,14 @@ function melhorarAcessibilidade() {
 function adicionarBotaoVoltarTopo() {
     const botao = document.createElement("button");
     botao.id = "btn-topo";
-    botao.innerHTML = "↑";
+    botao.textContent = "↑";
 
     botao.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     window.addEventListener("scroll", () => {
-        botao.style.display = window.scrollY > 300 ? "block" : "none";
+        botao.hidden = window.scrollY <= 300;
     });
 
     document.body.appendChild(botao);
@@ -1091,10 +1087,10 @@ function adicionarBotaoVoltarTopo() {
 // ----------------------
 function melhorarUX() {
     lista.style.opacity = "0";
-    setTimeout(() => {
-        lista.style.opacity = "1";
+    requestAnimationFrame(() => {
         lista.style.transition = "opacity 0.5s ease";
-    }, 200);
+        lista.style.opacity = "1";
+    });
 }
 
 // ----------------------
@@ -1102,10 +1098,10 @@ function melhorarUX() {
 // ----------------------
 function inicializar() {
     if (!document.querySelector("meta[name='viewport']")) {
-        const meta = document.createElement("meta");
-        meta.name = "viewport";
-        meta.content = "width=device-width, initial-scale=1.0";
-        document.head.appendChild(meta);
+        document.head.insertAdjacentHTML(
+            "beforeend",
+            `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+        );
     }
 
     ajustarResponsividade();
